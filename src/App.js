@@ -1,25 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { addCount, subCount } from './store/countSlice';
 
-function App() {
+const App = () => {
+  const [step, setStep] = useState(1);
+  const { count } = useSelector((state) => state.counter);
+  const dispatch = useDispatch();
+  const handleAdd = () => dispatch(addCount(45));
+  const handleSub = () => dispatch(subCount(45));
+  const handleStep = ({ target: { value } }) => {
+    setStep(Number(value));
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <h2>count: {count}</h2>
+      <button onClick={handleAdd}>+</button>
+      <button onClick={handleSub}>-</button>
+      <input type="number" value={step} onChange={handleStep} />
+    </>
   );
-}
+};
 
 export default App;
